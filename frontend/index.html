@@ -1,0 +1,155 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8">
+    <title>Лучший сервис погоды</title>
+    <style>
+        body {
+            text-align: center;
+        } 
+
+        #chat_box {
+            font-family: sans-serif;
+            margin: auto;
+            max-width: 800px;
+        }
+
+        .bot_message {
+            text-align: left;
+        }
+
+        .user_message {
+            text-align: right;
+        }
+
+        .message_box {
+            margin-top: 2em;
+            display: inline-block;
+            border-radius: 5px;
+            background: #eee;
+            padding-left: 0.75em;
+            padding-right: 0.75em;
+            padding-top: 0.5em;
+            padding-bottom: 0.5em;
+        }
+
+        .image_box {
+            margin-top: 1em;
+        }
+
+        .image_box img {
+            max-height: 20em;
+            border-radius: 5px;
+        }
+
+        #question_form {
+            margin-top: 3em;
+        }
+    </style>
+</head>
+
+<body>
+    <h1> Лучший сервис с погодой в Москве </h1>
+    <div id="chat_box"></div>
+
+    <div id="question_form">
+        <input
+            type="text" 
+            id="question_field" 
+            size=80 
+            autofocus 
+            placeholder="А завтра?"
+        >
+    </div>
+    
+    <script>
+        function create_message(from_user) {
+            var message = document.createElement("div");
+            message.classList.add("message");
+            message.classList.add(from_user ? "user_message" : "bot_message");
+            return message
+        };
+
+        function add_text(message, text) {
+            var message_box = document.createElement("div");
+            message_box.classList.add("message_box");
+            message_box.innerHTML = text.split("\n").join("<br>\n");
+            
+            message.appendChild(message_box);
+            return message;
+        };
+
+        function add_image(message, url) {
+            var image_box = document.createElement("div");
+            image_box.classList.add("image_box");
+            
+            var image = document.createElement("img");
+            image.src = url;
+
+            image_box.appendChild(image);
+            message.appendChild(image_box);
+            return message
+        };
+
+        function insert_message(message) {
+            var chat_box = document.getElementById("chat_box");
+            chat_box.appendChild(message);
+        };
+
+        function add_user_message(text) {
+            var m = create_message(true);
+            m = add_text(m, text);
+            insert_message(m);
+        };
+
+        function add_bot_message(text, image) {
+            var m = create_message(false);
+            m = add_text(m, text);
+            insert_message(m);
+
+            if (image) {
+                var m = create_message(false);
+                m = add_image(m, image);
+                insert_message(m);
+            }
+        };
+
+        function show_error(error) {
+            console.error(error)
+            add_bot_message("Произошла ошибка", null);
+        };
+
+        function send_request(text) {
+            text = text.trim();
+            if (text == "") {
+                return;
+            }
+            add_user_message(text);
+
+            fetch("/api/v1?message=" + encodeURI(text))
+            .then(response => {
+                if (!response.ok) {
+                    show_error(response.text());
+                } else {
+                    json = response.json()
+                    .then(json => add_bot_message(json.text, json.image))
+                    .catch(error => show_error(error));
+                }
+            }) 
+            .catch(error => show_error(error));
+        };
+
+        var question_field = document.getElementById("question_field");
+        question_field.addEventListener("keyup", event => {
+            if (event.which == 13 || event.keyCode == 13) {
+                text = question_field.value;
+                question_field.value = "";
+                send_request(text);
+            }
+        });
+
+        send_request("Какая погода сейчас?");
+    </script>
+</body>
+</html>
