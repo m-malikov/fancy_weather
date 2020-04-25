@@ -27,13 +27,6 @@ def generate_picture(weather: str):
 
     return choice(files)
 
-    # source_image = cv2.imread('pic_storage/1506418628_aleksey-savrasov-grachi-prileteli.jpg')
-    #
-    # # Do some processing, get output_img
-    #
-    # _, buffer = cv2.imencode('.jpg', source_image)
-    # return buffer.tobytes()
-
 
 if __name__ == '__main__':
     print(generate_picture('rainy'))

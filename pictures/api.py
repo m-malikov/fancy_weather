@@ -1,4 +1,5 @@
 import logging
+import os
 
 from flask import Flask, request, send_file
 from gevent import pywsgi
@@ -26,9 +27,6 @@ def generate_picture_api():
     weather = request.args.get('weather')
     logger.error(f'Weather: {weather}')
 
-    # byte_file = generate_picture(weather)
-    # response = make_response(byte_file)
-    # response.headers['Content-Type'] = 'image/jpg'
     file_path = generate_picture(weather)
     logger.error(f'Got file: {file_path}')
     if file_path is not None:
