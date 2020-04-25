@@ -42,7 +42,7 @@ if __name__ == '__main__':
     port = int(os.getenv('PICTURES_PORT', 30600))
 
     logger = logging.getLogger('pictures')
-    logger.error(f'Start on 0.0.0.0:{port}')  # f*ck gevent and use logger.error
+    logger.error(f'Start on 0.0.0.0:{port}')  # use logger.error because gevent forwards stdout to stderr
 
     # app.run(host='0.0.0.0', port=port, debug=False)
     server = pywsgi.WSGIServer(('0.0.0.0', port), app, log=logger)

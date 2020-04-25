@@ -5,24 +5,24 @@ from typing import Optional
 
 
 class Weather(Enum):
-    rainy = 'rainy'
-    snowy = 'winter'
-    cold = 'winter'
-    warm = 'summer'
-    spring = 'spring'
-    autumn = 'autumn'
+    RAINY = 'rainy'
+    SNOWY = 'winter'
+    COLD = 'winter'
+    WARM = 'summer'
+    SPRING = 'spring'
+    AUTUMN = 'autumn'
 
 
 def generate_picture(weather: str) -> Optional[str]:
     try:
-        dir_name = Weather[weather].value
+        dir_name = Weather[weather.upper()].value
     except KeyError:
         return None
 
-    path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'pic_storage/' + dir_name)
+    path = os.path.join(os.path.dirname(os.path.realpath(__file__)), f'pic_storage/{dir_name}')
 
     files = []
-    for root, dirs, filenames in os.walk(path):
+    for root, _, filenames in os.walk(path):
         for filename in filenames:
             files.append(os.path.join(root, filename))
 
