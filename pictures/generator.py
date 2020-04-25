@@ -31,7 +31,3 @@ def generate_picture(weather: str) -> Optional[str]:
     current_app.logger.debug(f'Found {len(files)} files')
 
     return choice(files)
-
-
-if __name__ == '__main__':
-    print(generate_picture('rainy'))

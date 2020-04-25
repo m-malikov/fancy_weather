@@ -1,5 +1,6 @@
 # Dev
 mypy
+pytest
 
 # Prod
 flask==1.1.2
