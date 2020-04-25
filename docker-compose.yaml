@@ -14,8 +14,7 @@ services:
     networks:
       - fancy_weather
 
-  # --------------------------------------------------------
-
+# todo: replace with your service's configuration
 #  some_core_service:
 #    image: "salamantos/fancy_weather/pictures:1.0.0"
 #    build:

@@ -3,6 +3,8 @@ from enum import Enum
 from random import choice
 from typing import Optional
 
+from flask import current_app
+
 
 class Weather(Enum):
     RAINY = 'rainy'
@@ -25,6 +27,8 @@ def generate_picture(weather: str) -> Optional[str]:
     for root, _, filenames in os.walk(path):
         for filename in filenames:
             files.append(os.path.join(root, filename))
+
+    current_app.logger.debug(f'Found {len(files)} files')
 
     return choice(files)
 

@@ -3,4 +3,4 @@ mypy
 
 # Prod
 flask==1.1.2
-gevent==20.4.0
+gunicorn==20.0.4
