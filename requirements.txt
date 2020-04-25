@@ -1,2 +1,6 @@
 # Dev
 mypy
+
+# Prod
+flask==1.1.2
+gevent==20.4.0

@@ -1,0 +1,33 @@
+version: '3.5'
+
+services:
+  pictures:
+    image: "salamantos/fancy_weather/pictures:1.0.0"
+    build:
+      context: .
+      dockerfile: ./pictures/Dockerfile
+    environment:
+      PICTURES_PORT: 30600
+    restart: on-failure
+    ports:
+      - 30600:30600
+    networks:
+      - fancy_weather
+
+  # --------------------------------------------------------
+
+#  some_core_service:
+#    image: "salamantos/fancy_weather/pictures:1.0.0"
+#    build:
+#      context: .
+#      dockerfile: ./pictures/Dockerfile
+#    environment:
+#      LOG_LEVEL: INFO
+#        depends_on:
+#          - pictures
+#    networks:
+#      - fancy_weather
+
+networks:
+  fancy_weather:
+    driver: bridge
