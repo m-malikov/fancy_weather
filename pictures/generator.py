@@ -1,6 +1,7 @@
 import os
 from enum import Enum
 from random import choice
+from typing import Optional
 
 
 class Weather(Enum):
@@ -12,7 +13,7 @@ class Weather(Enum):
     autumn = 'autumn'
 
 
-def generate_picture(weather: str):
+def generate_picture(weather: str) -> Optional[str]:
     try:
         dir_name = Weather[weather].value
     except KeyError:

@@ -1,5 +1,6 @@
 import logging
 import os
+from typing import Any
 
 from flask import Flask, request, send_file
 from gevent import pywsgi
@@ -10,7 +11,7 @@ app = Flask('pictures')
 
 
 @app.route('/generate/picture')
-def generate_picture_api():
+def generate_picture_api() -> Any:
     """
     Accepts following weather types:
         rainy
@@ -19,6 +20,8 @@ def generate_picture_api():
         warm
         spring
         autumn
+
+    Available at: http://localhost:30600/generate/picture?weather=warm
 
     :return: picture bytes
     """
