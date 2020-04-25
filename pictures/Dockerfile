@@ -1,5 +1,4 @@
-FROM python:3.7-slim
-#RUN apt-get update && apt-get install -y gcc build-essential curl cron
+FROM salamantos/fancy_weather:pic_storage-1.0.0
 
 # Set working directory
 WORKDIR /usr/app

@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   pictures:
-    image: "salamantos/fancy_weather/pictures:1.0.0"
+    image: "salamantos/fancy_weather:pictures-1.0.0"
     build:
       context: .
       dockerfile: ./pictures/Dockerfile
