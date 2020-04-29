@@ -1,2 +1,7 @@
 # Dev
 mypy
+pytest
+
+# Prod
+flask==1.1.2
+gunicorn==20.0.4
