@@ -1,0 +1,41 @@
+body {
+    text-align: center;
+}
+
+#chat_box {
+    font-family: sans-serif;
+    margin: auto;
+    max-width: 800px;
+}
+
+.bot_message {
+    text-align: left;
+}
+
+.user_message {
+    text-align: right;
+}
+
+.message_box {
+    margin-top: 2em;
+    display: inline-block;
+    border-radius: 5px;
+    background: #EEEEEE;
+    padding-left: 0.75em;
+    padding-right: 0.75em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
+
+.image_box {
+    margin-top: 1em;
+}
+
+.image_box img {
+    max-height: 20em;
+    border-radius: 5px;
+}
+
+#question_form {
+    margin-top: 3em;
+}
