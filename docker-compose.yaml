@@ -16,7 +16,10 @@ services:
 
   frontend:
     build: "./frontend"
-    network_mode: "host"
+    ports:
+      - 8080:80
+    networks:
+      - fancy_weather
 
 # todo: replace with your service's configuration
 #  some_core_service:
