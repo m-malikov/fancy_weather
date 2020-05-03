@@ -1,4 +1,4 @@
-FROM salamantos/fancy_weather:pic_storage-1.0.0
+FROM python:3.7-slim
 
 # Set working directory
 WORKDIR /usr/app
@@ -8,14 +8,13 @@ COPY ./requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 # Add app
-COPY ./pictures .
+COPY ./pictures ./pictures
 
 # Add entrypoint.sh
-RUN chmod +x entrypoint.sh
+RUN chmod +x ./pictures/entrypoint.sh
 
 # User
 USER nobody
 
 # Run
-CMD ["./entrypoint.sh"]
-
+CMD ["./pictures/entrypoint.sh"]

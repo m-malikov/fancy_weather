@@ -17,8 +17,8 @@ jobs:
           architecture: 'x64'
       - name: Install requirements
         run: pip install -r requirements.txt
-      #- name: Test pictures
-      #  run: pytest pictures
+      - name: Test pictures
+        run: IMGUR_CLIENT=13bfb3e95351a14 pytest pictures
       - name: Tests poems
         run: pytest poems
       - name: Run linter
