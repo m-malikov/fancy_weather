@@ -54,8 +54,8 @@ def test_getting_poem(client):
 
 def test_poem_and_info_are_consistent(client):
     poem_data = client.get("/?weather=type2").json
-    text = poem_data["text"][5:]
-    info = poem_data["info"][5:]
+    text = poem_data["text"].split(' ', 1)[-1]
+    info = poem_data["info"].split(' ', 1)[-1]
     assert text == info
 
 

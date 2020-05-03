@@ -13,9 +13,10 @@ def get_poem() -> Response:
     """
     weather = request.args['weather']
 
-    poem_object = Poem.query.filter_by(weather_type=weather)\
-                      .order_by(func.random())\
-                      .limit(1).one_or_none()
+    poem_object = (Poem.query
+                       .filter_by(weather_type=weather)
+                       .order_by(func.random())
+                       .limit(1).one_or_none())
     if poem_object is not None:
         return jsonify({
             "text": poem_object.text,
