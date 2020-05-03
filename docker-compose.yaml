@@ -13,6 +13,17 @@ services:
       - 30600:30600
     networks:
       - fancy_weather
+  poems:
+    build:
+      context: .
+      dockerfile: ./poems/Dockerfile
+    environment:
+      POEMS_PORT: 30601
+    restart: on-failure
+    ports:
+      - 30601:30601
+    networks:
+      - fancy_weather
 
 # todo: replace with your service's configuration
 #  some_core_service:
