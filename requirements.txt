@@ -1,6 +1,7 @@
 # Dev
 mypy
 pytest
+flake8
 
 # Prod
 flask==1.1.2
