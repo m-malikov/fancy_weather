@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: ./pictures/Dockerfile
     environment:
-      PICTURES_PORT: 30600
+      - PICTURES_PORT=30600
     restart: on-failure
     ports:
       - 30600:30600
@@ -18,7 +18,9 @@ services:
       context: .
       dockerfile: ./poems/Dockerfile
     environment:
-      POEMS_PORT: 30601
+      - POEMS_PORT=30601
+      - SQLALCHEMY_DATABASE_URI=sqlite:///poems_db.sqlite
+      - FLASK_APP=poems
     restart: on-failure
     ports:
       - 30601:30601
