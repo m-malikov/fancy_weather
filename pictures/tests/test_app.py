@@ -1,7 +1,6 @@
-import pytest
 from flask import Flask
 
-from generator import generate_picture
+from pictures.generator import generate_picture
 
 """
 Documentation: https://docs.pytest.org
