@@ -41,3 +41,6 @@ dmypy.json
 .pytype/
 
 *.json
+
+# The name of database
+weather
