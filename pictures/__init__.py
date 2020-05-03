@@ -67,6 +67,10 @@ def init_available_images_collection(application: Flask) \
     return images_links
 
 
+__all__ = (create_app,
+           init_available_images_collection,
+           generate_picture)
+
 if __name__ == '__main__':
     port = int(os.getenv('PICTURES_PORT', 30600))
 
