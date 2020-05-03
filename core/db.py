@@ -1,9 +1,24 @@
 import json
-from typing import Any, List, Dict
+from dataclasses import dataclass
+from typing import Any, List, Dict, Optional
 
-from sqlalchemy.sql.ddl import CreateTable
+from sqlalchemy.sql.ddl import CreateTable, DropTable
 from sqlalchemy_aio import ASYNCIO_STRATEGY
 from sqlalchemy import create_engine, Column, Text, Table, MetaData
+
+
+@dataclass
+class Forecast:
+    """
+    Representation of forecast to return for simpler usage
+    """
+    date: str
+    condition: str
+    season: str
+    sunrise: str
+    sunset: str
+    set_end: str
+    hours: List[Dict[str, Dict[str, float]]]
 
 
 class DatabaseWrapper:
@@ -18,6 +33,8 @@ class DatabaseWrapper:
         self._table = Table(
             self._TABLE_NAME, metadata,
             Column('date', Text, primary_key=True),  # F.E. "2020-05-03"
+            Column('condition', Text),  # F.E. "overcast"
+            Column('season', Text),  # F.E. "season"
             Column('sunrise', Text),  # F.E. "04:41"
             Column('sunset', Text),  # F.E. "20:12"
             Column('set_end', Text),  # F.E. "20:57"
@@ -28,7 +45,7 @@ class DatabaseWrapper:
         if not self._engine.dialect.has_table(self._engine.sync_engine, "weather"):
             await self._engine.execute(CreateTable(self._table))
 
-    async def insert_forecasts(self, forecasts: List[Dict[str, Any]]) -> None:
+    async def insert_forecasts(self, condition: str, season: str, forecasts: List[Dict[str, Any]]) -> None:
         """
         Update or insert forecasts in db.
         This method quite ineffective, we update rows one by one.
@@ -40,18 +57,45 @@ class DatabaseWrapper:
         conn = await self._engine.connect()
         for forecast in forecasts:
             value = {
+                'date': forecast['date'],
+                'condition': condition,
+                'season': season,
                 'sunrise': forecast.get('sunrise', ''),
                 'sunset': forecast.get('sunset', ''),
                 'set_end': forecast.get('set_end', ''),
                 'hours': self._serialize_hours(forecast.get('hours', [])),
             }
             old_forecast_select = await conn.execute(self._table.select(self._table.c.date == forecast['date']))
-            old_forecast = await old_forecast_select.fetchall()
-            if len(old_forecast) > 0:
+            old_forecast = await old_forecast_select.fetchone()
+            if old_forecast:
                 await conn.execute(self._table.update().where(self._table.c.date == forecast['date']).values(value))
             else:
-                value['date'] = forecast['date']
                 await conn.execute(self._table.insert().values(value))
+
+        await conn.close()
+
+    async def get_forecast_by_date(self, date: str) -> Optional[Forecast]:
+        """
+        :param date: string of date that looks like "year-month-day"
+        :return: row as dict
+        """
+        conn = await self._engine.connect()
+        forecast_select = await conn.execute(self._table.select(self._table.c.date == date))
+        forecast = await forecast_select.fetchone()
+        await conn.close()
+
+        if forecast is None:
+            return None
+
+        return Forecast(
+            date=forecast.date,
+            condition=forecast.condition,
+            season=forecast.season,
+            sunrise=forecast.sunrise,
+            sunset=forecast.sunset,
+            set_end=forecast.set_end,
+            hours=json.loads(forecast.hours),
+        )
 
     @staticmethod
     def _serialize_hours(hours: List[Dict[str, Any]]) -> str:

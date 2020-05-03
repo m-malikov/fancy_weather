@@ -9,6 +9,7 @@ from tornado.options import options
 
 from core import define_options, api
 from core.db import DatabaseWrapper
+from core.weather import Weather
 
 log = logging.getLogger(__name__)
 
@@ -24,8 +25,11 @@ async def update_weather(db: DatabaseWrapper) -> None:
                 async with session.get(options.yandex_api_url, headers=headers) as response:
                     json_response = await response.json()
                     log.info(f"Response from ya.api: {json_response}")  # We check api rarely, but it's important
+
+                    condition = json_response['fact']['condition']
+                    season = json_response['fact']['season']
                     forecasts = json_response['forecasts']
-                    await db.insert_forecasts(forecasts)
+                    await db.insert_forecasts(condition, season, forecasts)
         except:
             # ToDo: add metrics
             log.exception("While updating Ya.Weather api en error occurred")
@@ -54,5 +58,7 @@ if __name__ == "__main__":
     event_loop.run_until_complete(db_wrapper.init())
     event_loop.create_task(update_weather(db_wrapper))  # Start updating forecasts
 
-    api_app = api.create_app()
+    weather = Weather(db_wrapper)
+
+    api_app = api.create_app(weather)
     web.run_app(api_app, host=options.host, port=options.port)

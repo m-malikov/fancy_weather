@@ -20,5 +20,9 @@ def init(config_path: str) -> None:
 
     define("log_config_path", help="path to logging config as json", type=str)
 
+    define("pictures_host", help="hostname of pictures service", type=str, default="localhost")
+    define("pictures_port", help="port of pictures service", type=str, default=30600)
+    define("pictures_api", help="api of pictures service", type=str, default="/picture?weather=")
+
     parse_config_file(config_path)
 
