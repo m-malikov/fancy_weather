@@ -4,7 +4,7 @@ from typing import Any
 
 from flask import Flask, request, send_file
 
-from generator import generate_picture
+from pictures.generator import generate_picture
 
 application = Flask('pictures')
 gunicorn_logger = logging.getLogger('gunicorn.error')
@@ -27,7 +27,7 @@ def generate_picture_api() -> Any:
 
     :return: picture bytes
     """
-    weather = request.args.get('weather')
+    weather = request.args['weather']
     application.logger.info(f'Weather: {weather}')
 
     file_path = generate_picture(weather)

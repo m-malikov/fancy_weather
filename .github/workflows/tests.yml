@@ -1,0 +1,29 @@
+name: tests
+
+on:
+  push:
+    branches: '*'
+  pull_request:
+    branches: '*'
+
+jobs:
+  run_tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-python@v1
+        with:
+          python-version: '3.8'
+          architecture: 'x64'
+      - name: Install requirements
+        run: pip install -r requirements.txt
+      #- name: Test pictures
+      #  run: pytest pictures
+      - name: Tests poems
+        run: pytest poems
+      - name: Run linter
+        run: flake8 .
+      - name: Check pictures types
+        run: mypy -p pictures --config-file mypy.ini
+      - name: Check poems types
+        run: mypy -p poems --config-file mypy.ini

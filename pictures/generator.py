@@ -21,7 +21,8 @@ def generate_picture(weather: str) -> Optional[str]:
     except KeyError:
         return None
 
-    path = os.path.join(os.path.dirname(os.path.realpath(__file__)), f'pic_storage/{dir_name}')
+    path = os.path.join(os.path.dirname(os.path.realpath(__file__)),
+                        f'pic_storage/{dir_name}')
 
     files = []
     for root, _, filenames in os.walk(path):
