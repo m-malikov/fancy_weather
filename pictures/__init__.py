@@ -59,10 +59,10 @@ def init_available_images_collection(application: Flask) \
             images_links[weather_type.value] = links
         else:
             application.logger.error(
-                f'Got empty collection for {weather_type} ({weather_type.value})'
+                f'Got empty collection for {weather_type}'
             )
             raise Exception(
-                f'Got empty collection for {weather_type} ({weather_type.value})'
+                f'Got empty collection for {weather_type}'
             )
     return images_links
 
