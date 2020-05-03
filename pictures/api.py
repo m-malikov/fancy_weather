@@ -1,19 +1,12 @@
-import logging
-import os
-from typing import Any
+from typing import Any, Dict, List
 
-from flask import Flask, request, send_file
+from flask import current_app as application
+from flask import request
 
 from pictures.generator import generate_picture
 
-application = Flask('pictures')
-gunicorn_logger = logging.getLogger('gunicorn.error')
-application.logger.handlers = gunicorn_logger.handlers
-application.logger.setLevel(gunicorn_logger.level)
 
-
-@application.route('/generate/picture')
-def generate_picture_api() -> Any:
+def generate_picture_api(images_links: Dict[str, List[str]]) -> Any:
     """
     Accepts following weather types:
         rainy
@@ -25,21 +18,16 @@ def generate_picture_api() -> Any:
 
     Available at: http://localhost:30600/generate/picture?weather=warm
 
-    :return: picture bytes
+    :return: picture link
     """
     weather = request.args['weather']
     application.logger.info(f'Weather: {weather}')
 
-    file_path = generate_picture(weather)
-    if file_path is not None:
-        application.logger.info(f'Got file: {file_path}')
-        return send_file(file_path), 200
+    image_link = generate_picture(weather, images_links)
+    if image_link is not None:
+        application.logger.info(f'Got link: {image_link}')
+        return {'data': image_link, 'error': ''}, 200
     else:
-        application.logger.error(f'File for this weather type not found')
-        return None, 404
-
-
-if __name__ == '__main__':
-    port = int(os.getenv('PICTURES_PORT', 30600))
-
-    application.run(host='0.0.0.0', port=port, debug=False)
+        err_msg = 'File for this weather type not found'
+        application.logger.error(err_msg)
+        return {'data': '', 'error': err_msg}, 404

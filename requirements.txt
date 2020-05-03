@@ -1,9 +1,12 @@
 # Dev
 mypy
-pytest
+pytest~=5.4.1
 flake8
 
 # Prod
 flask==1.1.2
 gunicorn==20.0.4
 flask-sqlalchemy==2.4.1
+click~=7.1.2
+SQLAlchemy~=1.3.16
+requests~=2.23.0
