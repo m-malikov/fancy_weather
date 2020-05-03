@@ -19,7 +19,8 @@ class TestPictureGenerator:
 
     def test_wrong_weather(self):
         with self.application.app_context():
-            assert generate_picture('wrong_weather_type', self.images_links) is None
+            assert generate_picture('wrong_weather_type',
+                                    self.images_links) is None
 
     def test_rainy(self):
         with self.application.app_context():

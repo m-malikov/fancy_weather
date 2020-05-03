@@ -28,5 +28,6 @@ def generate_picture_api(images_links: Dict[str, List[str]]) -> Any:
         application.logger.info(f'Got link: {image_link}')
         return {'data': image_link, 'error': ''}, 200
     else:
-        application.logger.error(f'File for this weather type not found')
-        return {'data': '', 'error': 'File for this weather type not found'}, 404
+        err_msg = 'File for this weather type not found'
+        application.logger.error(err_msg)
+        return {'data': '', 'error': err_msg}, 404

@@ -12,7 +12,8 @@ class WeatherToImgurAlbum(Enum):
     AUTUMN = 'Qp8PziJ'
 
 
-def generate_picture(weather: str, images_links: Dict[str, List[str]]) -> Optional[str]:
+def generate_picture(weather: str, images_links: Dict[str, List[str]]) \
+        -> Optional[str]:
     try:
         imgur_album = WeatherToImgurAlbum[weather.upper()].value
     except KeyError:
