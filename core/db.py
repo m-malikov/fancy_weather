@@ -1,7 +1,6 @@
 import json
 from typing import Any, List, Dict
 
-from sqlalchemy.orm import mapper
 from sqlalchemy.sql.ddl import CreateTable
 from sqlalchemy_aio import ASYNCIO_STRATEGY
 from sqlalchemy import create_engine, Column, Text, Table, MetaData

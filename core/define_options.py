@@ -18,5 +18,7 @@ def init(config_path: str) -> None:
     define("host", help="default host to web server", type=str, default="localhost")
     define("port", help="http port for running configurator", type=int, default=5000)
 
+    define("log_config_path", help="path to logging config as json", type=str)
+
     parse_config_file(config_path)
 
