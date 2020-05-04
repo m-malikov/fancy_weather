@@ -1,0 +1,22 @@
+name: deploy
+on: 
+  push:
+    branches: [master]
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy app
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: |
+          cd fancy_weather
+          docker-compose down
+          git pull
+          docker-compose build
+          YANDEX_WEATHER_API_KEY=${{ secrets.YANDEX_API_SECRET_KEY }} docker-compose up -d
