@@ -5,7 +5,6 @@ def init(config_path: str) -> None:
     """
     Define tornado.options and parse them from config defined by config_path
     """
-    define("yandex_api_key", help="Api key to Yandex.Weather api", type=str)
     define("yandex_api_url",
            help="Url to Yandex.Weather api",
            type=str,

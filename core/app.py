@@ -1,6 +1,8 @@
 import asyncio
 import json
 import logging.config
+import os
+import sys
 from argparse import ArgumentParser
 from typing import Dict
 
@@ -14,11 +16,11 @@ from weather import Weather
 log = logging.getLogger(__name__)
 
 
-async def update_weather(db: DatabaseWrapper) -> None:
+async def update_weather(db: DatabaseWrapper, yandex_api_key: str) -> None:
     """
     Task to update weather from api every options.weather_update_interval seconds
     """
-    headers: Dict[str, str] = {"X-Yandex-API-Key": options.yandex_api_key}
+    headers: Dict[str, str] = {"X-Yandex-API-Key": yandex_api_key}
     while True:
         try:
             async with ClientSession() as session:
@@ -39,6 +41,10 @@ async def update_weather(db: DatabaseWrapper) -> None:
 
 
 if __name__ == "__main__":
+    YANDEX_API_KEY = os.environ.get("YANDEX_WEATHER_API_KEY")
+    if not YANDEX_API_KEY:
+        sys.exit("Set environment variable YANDEX_WEATHER_API_KEY")
+
     parser = ArgumentParser()
     parser.add_argument("--config", required=True, help="path to service config file")
     args = parser.parse_args()
@@ -56,7 +62,7 @@ if __name__ == "__main__":
     # Init db
     db_wrapper = DatabaseWrapper(options.db_uri)
     event_loop.run_until_complete(db_wrapper.init())
-    event_loop.create_task(update_weather(db_wrapper))  # Start updating forecasts
+    event_loop.create_task(update_weather(db_wrapper, YANDEX_API_KEY))  # Start updating forecasts
 
     weather = Weather(db_wrapper)
 
