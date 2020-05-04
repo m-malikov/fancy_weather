@@ -1,6 +1,6 @@
 from aiohttp import web
 
-from core.weather import Weather
+from weather import Weather
 
 
 class Handler:

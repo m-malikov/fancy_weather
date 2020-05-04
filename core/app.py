@@ -7,9 +7,9 @@ from typing import Dict
 from aiohttp import ClientSession, web
 from tornado.options import options
 
-from core import define_options, api
-from core.db import DatabaseWrapper
-from core.weather import Weather
+import define_options, api
+from db import DatabaseWrapper
+from weather import Weather
 
 log = logging.getLogger(__name__)
 
