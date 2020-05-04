@@ -2,7 +2,7 @@ import json
 from dataclasses import dataclass
 from typing import Any, List, Dict, Optional
 
-from sqlalchemy.sql.ddl import CreateTable, DropTable
+from sqlalchemy.sql.ddl import CreateTable
 from sqlalchemy_aio import ASYNCIO_STRATEGY
 from sqlalchemy import create_engine, Column, Text, Table, MetaData
 
@@ -108,4 +108,3 @@ class DatabaseWrapper:
             }
 
         return json.dumps(clear_hours)
-

@@ -9,7 +9,8 @@ from typing import Dict
 from aiohttp import ClientSession, web
 from tornado.options import options
 
-import define_options, api
+import define_options
+import api
 from db import DatabaseWrapper
 from weather import Weather
 
@@ -32,8 +33,7 @@ async def update_weather(db: DatabaseWrapper, yandex_api_key: str) -> None:
                     season = json_response['fact']['season']
                     forecasts = json_response['forecasts']
                     await db.insert_forecasts(condition, season, forecasts)
-        except:
-            # ToDo: add metrics
+        except Exception:
             log.exception("While updating Ya.Weather api en error occurred")
             await asyncio.sleep(60)  # Sleep short time in cause of error
         else:

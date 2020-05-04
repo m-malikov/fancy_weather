@@ -28,4 +28,3 @@ def init(config_path: str) -> None:
     define("poems_api", help="api of pictures service", type=str, default="/?weather=")
 
     parse_config_file(config_path)
-

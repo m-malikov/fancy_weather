@@ -24,6 +24,8 @@ jobs:
       - name: Run linter
         run: flake8 .
       - name: Check pictures types
-        run: mypy -p pictures --config-file mypy.ini
+        run: mypy -p pictures
       - name: Check poems types
-        run: mypy -p poems --config-file mypy.ini
+        run: mypy -p poems
+      - name: Check core types
+          run: mypy -p core

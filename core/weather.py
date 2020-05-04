@@ -1,7 +1,7 @@
 import json
 import logging
 from datetime import datetime, timedelta
-from typing import Dict, Optional
+from typing import Dict, Optional, Tuple
 
 from aiohttp import ClientSession, ClientResponseError
 from tornado.options import options
@@ -22,22 +22,23 @@ class Weather:
         self._client = ClientSession()
         self._db = db
 
-    async def process_message(self, text: str) -> Dict[str, Optional[str]]:
-        date = self._parse_date_from_text(text)
+    async def process_message(self, message: str) -> Dict[str, Optional[str]]:
+        date = self._parse_date_from_text(message)
+
         if date is None:
-            text = "Не смог распознать сообщение! Погоду можно узнать только на близжайшую неделю."
-            return {"text": text, "picture": None}
+            text: Optional[str] = "Не смог распознать сообщение! Погоду можно узнать только на близжайшую неделю."
+            return {"text": text, "author": None, "picture": None}
 
         forecast = await self._db.get_forecast_by_date(date)
         if forecast is None:
             text = f"К сожалению, у меня нет данных о погоде на {date}"
-            return {"text": text, "picture": None}
+            return {"text": text, "author": None, "picture": None}
 
         weather_type = self._parse_forecast_to_weather_type(forecast).value
 
-        text = await self._fetch_poem(weather_type)
+        text, author = await self._fetch_poem(weather_type)
         picture = await self._fetch_picture(weather_type)
-        return {"text": text, "picture": picture}
+        return {"text": text, "author": author, "picture": picture}
 
     @staticmethod
     def _parse_date_from_text(text: str) -> Optional[str]:
@@ -86,17 +87,16 @@ class Weather:
 
         return WeatherType.COLD
 
-    async def _fetch_poem(self, weather_type: str) -> Optional[str]:
+    async def _fetch_poem(self, weather_type: str) -> Tuple[Optional[str], Optional[str]]:
         poems_api = f"http://{options.poems_host}:{options.poems_port}{options.poems_api}{weather_type}"
         try:
             async with self._client.get(poems_api) as poems:
-                poems = await poems.json()
-                return poems['text']
+                poems_json = await poems.json()
+                return poems_json['text'], poems_json['info']
         except (ClientResponseError, json.JSONDecodeError) as e:
-            # ToDo: add metrics
             log.exception(f"While fetching pictures an error occured: {str(e.args)}")
 
-        return None
+        return None, None
 
     async def _fetch_picture(self, weather_type: str) -> Optional[str]:
         picture_api = f"http://{options.pictures_host}:{options.pictures_port}{options.pictures_api}{weather_type}"
@@ -106,7 +106,6 @@ class Weather:
                 if not picture_json.get('error', ''):
                     return picture_json['data']
         except (ClientResponseError, json.JSONDecodeError) as e:
-            # ToDo: add metrics
             log.exception(f"While fetching pictures an error occured: {str(e.args)}")
 
         return None
