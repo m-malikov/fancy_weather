@@ -19,8 +19,6 @@ jobs:
         run: pip install -r requirements.txt
 
       # Pytest
-      - name: Test core
-        run: pytest core
       - name: Test pictures
         run: IMGUR_CLIENT=13bfb3e95351a14 pytest pictures
       - name: Tests poems
