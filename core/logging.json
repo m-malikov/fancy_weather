@@ -12,22 +12,13 @@
       "class": "logging.StreamHandler",
       "level": "DEBUG",
       "formatter": "standard"
-    },
-    "file": {
-      "class": "logging.handlers.TimedRotatingFileHandler",
-      "level": "INFO",
-      "filename": "current-core.log",
-      "formatter": "standard",
-      "when": "midnight",
-      "backupCount": 2
     }
   },
   "loggers": {
     "": {
       "level": "DEBUG",
       "handlers": [
-        "console",
-        "file"
+        "console"
       ]
     }
   }
