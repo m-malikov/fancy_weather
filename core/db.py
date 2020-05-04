@@ -31,11 +31,11 @@ class Forecast:
         message = ""
         if temp:
             sign_temp = '+' if temp >= 0 else '-'
-            message += f"{sign_temp}{temp} градусов Цельсия."
+            message += f"{sign_temp}{temp} градусов Цельсия. "
 
         if feels_like:
             sign_feels_like = '+' if feels_like >= 0 else '-'
-            message += f"Ощущается как {sign_feels_like}{feels_like}."
+            message += f"Ощущается как {sign_feels_like}{feels_like}. "
 
         desc = Condition(self.condition).translate_to_russian()
         if desc:
