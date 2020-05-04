@@ -27,6 +27,17 @@ services:
       - 30601:30601
     networks:
       - fancy_weather
+  core:
+    build:
+      context: .
+      dockerfile: ./core/Dockerfile
+    environment:
+      - YANDEX_WEATHER_API_KEY
+    restart: on-failure
+    ports:
+      - 5000:5000
+    networks:
+      - fancy_weather
 
   frontend:
     build: "./frontend"

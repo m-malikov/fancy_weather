@@ -53,10 +53,6 @@ function show_error(error) {
     console.error(error)
     add_bot_message("Произошла ошибка", null)
 }
-function show_error(error) {
-    console.error(error)
-    add_bot_message("Произошла ошибка", null)
-}
 
 function send_request(text) {
     text = text.trim()
@@ -65,13 +61,13 @@ function send_request(text) {
     }
     add_user_message(text)
     
-    fetch("/api/v1?message=" + encodeURI(text))
+    fetch("/api/v1/weather?text=" + encodeURI(text))
         .then(response => {
             if (!response.ok) {
                 show_error(response.text())
             } else {
                 json = response.json()
-                    .then(json => add_bot_message(json.text, json.image))
+                    .then(json => add_bot_message(json.text, json.picture))
                     .catch(error => show_error(error))
             }
         })
@@ -87,5 +83,5 @@ question_field.addEventListener("keyup", event => {
     }
 })
 
-send_request("Какая погода сейчас?")
+send_request("Какая погода  сегодня?")
 
