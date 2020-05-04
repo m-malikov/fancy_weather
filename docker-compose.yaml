@@ -55,5 +55,6 @@ services:
     networks:
       - fancy_weather
 
+networks:
   fancy_weather:
     driver: bridge
