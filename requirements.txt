@@ -5,6 +5,7 @@ flake8
 
 # Prod
 aiohttp==3.6.2
+aiogram==2.8
 tornado==6.0.4  # Just for tornado options
 flask==1.1.2
 gunicorn==20.0.4

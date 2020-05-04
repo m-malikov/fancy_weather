@@ -26,7 +26,7 @@ class Weather:
         date = self._parse_date_from_text(message)
 
         if date is None:
-            text: Optional[str] = "Не смог распознать сообщение! Погоду можно узнать только на близжайшую неделю."
+            text: Optional[str] = "Не смог распознать сообщение! Погоду можно узнать только на ближайшую неделю."
             return {"text": text, "author": None, "picture": None}
 
         forecast = await self._db.get_forecast_by_date(date)
@@ -43,21 +43,23 @@ class Weather:
     @staticmethod
     def _parse_date_from_text(text: str) -> Optional[str]:
         current_date = datetime.today()
-        if 'сегодня' in text:
+
+        clear_text = text.lower()
+        if 'сегодня' in clear_text:
             time_delta = timedelta(days=0)
-        elif 'завтра' in text or "1 день" in text or "один день" in text:
+        elif 'завтра' in clear_text or "1 день" in clear_text or "один день" in clear_text:
             time_delta = timedelta(days=1)
-        elif 'послезавтра' in text or "2 дня" in text or "два дня" in text:
+        elif 'послезавтра' in clear_text or "2 дня" in clear_text or "два дня" in clear_text:
             time_delta = timedelta(days=2)
-        elif "3 дня" in text or "три дня" in text:
+        elif "3 дня" in clear_text or "три дня" in clear_text:
             time_delta = timedelta(days=3)
-        elif "4 дня" in text or "четыре дня" in text:
+        elif "4 дня" in clear_text or "четыре дня" in clear_text:
             time_delta = timedelta(days=4)
-        elif "5 дней" in text or "пять дней" in text:
+        elif "5 дней" in clear_text or "пять дней" in clear_text:
             time_delta = timedelta(days=5)
-        elif '6 дней' in text or "6 дней" in text:
+        elif '6 дней' in clear_text or "6 дней" in clear_text:
             time_delta = timedelta(days=6)
-        elif 'неделю' in text or "7 дней" in text or "семь дней" in text:
+        elif 'неделю' in clear_text or "7 дней" in clear_text or "семь дней" in clear_text:
             time_delta = timedelta(days=7)
         else:
             return None

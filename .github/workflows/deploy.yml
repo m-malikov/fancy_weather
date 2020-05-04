@@ -17,7 +17,8 @@ jobs:
 
         script: |
           cd fancy_weather
-          echo YANDEX_WEATHER_API_KEY=${{ secrets.YANDEX_WEATHER_API_KEY }} > .env
+          echo YANDEX_WEATHER_API_KEY=${{ secrets.YANDEX_WEATHER_API_KEY }} >> .env
+          echo TG_TOKEN=${{ secrets.TG_TOKEN }} >> .env
           docker-compose down
           git pull
           docker-compose build

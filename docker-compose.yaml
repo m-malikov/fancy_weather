@@ -38,6 +38,15 @@ services:
       - 5000:5000
     networks:
       - fancy_weather
+  tg_bot:
+    build:
+      context: .
+      dockerfile: ./tg_bot/Dockerfile
+    environment:
+      - TG_TOKEN
+    restart: on-failure
+    networks:
+      - fancy_weather
 
   frontend:
     build: "./frontend"
@@ -46,19 +55,5 @@ services:
     networks:
       - fancy_weather
 
-# todo: replace with your service's configuration
-#  some_core_service:
-#    image: "salamantos/fancy_weather/pictures:1.0.0"
-#    build:
-#      context: .
-#      dockerfile: ./pictures/Dockerfile
-#    environment:
-#      LOG_LEVEL: INFO
-#        depends_on:
-#          - pictures
-#    networks:
-#      - fancy_weather
-
-networks:
   fancy_weather:
     driver: bridge

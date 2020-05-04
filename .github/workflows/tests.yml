@@ -29,3 +29,5 @@ jobs:
         run: mypy -p poems
       - name: Check core types
         run: mypy -p core
+      - name: Check tg_bot types
+        run: mypy -p tg_bot
