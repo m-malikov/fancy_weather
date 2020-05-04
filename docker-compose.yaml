@@ -20,13 +20,15 @@ services:
       dockerfile: ./poems/Dockerfile
     environment:
       - POEMS_PORT=30601
-      - SQLALCHEMY_DATABASE_URI=sqlite:///poems_db.sqlite
+      - SQLALCHEMY_DATABASE_URI=sqlite:////usr/db/poems_db.sqlite
       - FLASK_APP=poems
     restart: on-failure
     ports:
       - 30601:30601
     networks:
       - fancy_weather
+    volumes:
+      - ./db/poems:/usr/db
   core:
     build:
       context: .
@@ -39,6 +41,8 @@ services:
       - 5000:5000
     networks:
       - fancy_weather
+    volumes:
+      - ./db/core:/usr/db
   tg_bot:
     build:
       context: .

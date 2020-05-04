@@ -10,7 +10,7 @@ def init(config_path: str) -> None:
            type=str,
            default="https://api.weather.yandex.ru/v1/forecast?lat=55.75396&lon=37.620393&extra=true")
 
-    define("db_uri", help="Uri to sqlite db", type=str, default="sqlite:///weather")
+    define("db_uri", help="Uri to sqlite db", type=str, default="sqlite:////usr/db/weather.sqlite")
 
     define("weather_update_interval", help="How often to update weather from api in seconds", type=int, default=86400)
 
