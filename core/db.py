@@ -18,7 +18,7 @@ class Forecast:
     sunrise: str
     sunset: str
     set_end: str
-    hours: List[Dict[str, Dict[str, float]]]
+    hours: Dict[str, Dict[str, float]]
 
 
 class DatabaseWrapper:
@@ -52,6 +52,7 @@ class DatabaseWrapper:
         Look here why we cant implement insert on conflict: https://github.com/sqlalchemy/sqlalchemy/issues/4010
 
         However, it's okay for us. len(forecasts) no more that 7 and we update forecasts rarely
+        :param condition:
         :param forecasts: list of forecasts to update in db
         """
         conn = await self._engine.connect()

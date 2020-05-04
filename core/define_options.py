@@ -22,7 +22,11 @@ def init(config_path: str) -> None:
 
     define("pictures_host", help="hostname of pictures service", type=str, default="localhost")
     define("pictures_port", help="port of pictures service", type=str, default=30600)
-    define("pictures_api", help="api of pictures service", type=str, default="/picture?weather=")
+    define("pictures_api", help="api of pictures service", type=str, default="/generate/picture?weather=")
+
+    define("poems_host", help="hostname of pictures service", type=str, default="localhost")
+    define("poems_port", help="port of pictures service", type=str, default=30601)
+    define("poems_api", help="api of pictures service", type=str, default="/?weather=")
 
     parse_config_file(config_path)
 
