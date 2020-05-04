@@ -28,4 +28,4 @@ jobs:
       - name: Check poems types
         run: mypy -p poems
       - name: Check core types
-          run: mypy -p core
+        run: mypy -p core
