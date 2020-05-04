@@ -32,6 +32,7 @@ services:
       context: .
       dockerfile: ./core/Dockerfile
     environment:
+      - TZ=Europe/Moscow
       - YANDEX_WEATHER_API_KEY
     restart: on-failure
     ports:

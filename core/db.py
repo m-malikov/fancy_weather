@@ -1,10 +1,14 @@
 import json
+import logging
 from dataclasses import dataclass
-from typing import Any, List, Dict, Optional
+from datetime import datetime
+from typing import Any, List, Dict, Optional, Tuple
 
 from sqlalchemy.sql.ddl import CreateTable
 from sqlalchemy_aio import ASYNCIO_STRATEGY
 from sqlalchemy import create_engine, Column, Text, Table, MetaData
+
+from enums import Condition
 
 
 @dataclass
@@ -20,14 +24,42 @@ class Forecast:
     set_end: str
     hours: Dict[str, Dict[str, float]]
 
+    @property
+    def description(self) -> str:
+        temp, feels_like = self.current_temperature
+
+        message = ""
+        if temp:
+            sign_temp = '+' if temp >= 0 else '-'
+            message += f"{sign_temp}{temp} градусов Цельсия."
+
+        if feels_like:
+            sign_feels_like = '+' if feels_like >= 0 else '-'
+            message += f"Ощущается как {sign_feels_like}{feels_like}."
+
+        desc = Condition(self.condition).translate_to_russian()
+        if desc:
+            message += desc
+
+        return message
+
+    @property
+    def current_temperature(self) -> Tuple[Optional[float], Optional[float]]:
+        current_hour = str(datetime.now().hour)
+        hour_data = self.hours.get(current_hour)
+        if hour_data:
+            return hour_data.get('temp'), hour_data.get('feels_like')
+
+        return None, None
+
 
 class DatabaseWrapper:
     _TABLE_NAME = "weather"
 
     def __init__(self, db_uri: str) -> None:
-        # The echo flag is a shortcut to setting up SQLAlchemy logging,
-        # which is accomplished via Python’s standard logging module.
-        self._engine = create_engine(db_uri, echo=True, strategy=ASYNCIO_STRATEGY)
+        logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
+
+        self._engine = create_engine(db_uri, strategy=ASYNCIO_STRATEGY)
 
         metadata = MetaData()
         self._table = Table(

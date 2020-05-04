@@ -27,18 +27,19 @@ class Weather:
 
         if date is None:
             text: Optional[str] = "Не смог распознать сообщение! Погоду можно узнать только на ближайшую неделю."
-            return {"text": text, "author": None, "picture": None}
+            return {"desc": None, "text": text, "author": None, "picture": None}
 
         forecast = await self._db.get_forecast_by_date(date)
         if forecast is None:
             text = f"К сожалению, у меня нет данных о погоде на {date}"
-            return {"text": text, "author": None, "picture": None}
+            return {"desc": None, "text": text, "author": None, "picture": None}
 
+        desc = forecast.description
         weather_type = self._parse_forecast_to_weather_type(forecast).value
 
         text, author = await self._fetch_poem(weather_type)
         picture = await self._fetch_picture(weather_type)
-        return {"text": text, "author": author, "picture": picture}
+        return {"desc": desc, "text": text, "author": author, "picture": picture}
 
     @staticmethod
     def _parse_date_from_text(text: str) -> Optional[str]:
@@ -59,8 +60,6 @@ class Weather:
             time_delta = timedelta(days=5)
         elif '6 дней' in clear_text or "6 дней" in clear_text:
             time_delta = timedelta(days=6)
-        elif 'неделю' in clear_text or "7 дней" in clear_text or "семь дней" in clear_text:
-            time_delta = timedelta(days=7)
         else:
             return None
 
@@ -83,8 +82,7 @@ class Weather:
         if season == Season.AUTUMN:
             return WeatherType.AUTUMN
 
-        average_temperature = sum([hour['temp'] for hour in forecast.hours.values()]) / len(forecast.hours)
-        if average_temperature > 10.0:
+        if forecast.current_temperature[0] > 10.0:
             return WeatherType.WARM
 
         return WeatherType.COLD

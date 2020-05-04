@@ -37,10 +37,16 @@ function add_user_message(text) {
     insert_message(m)
 }
 
-function add_bot_message(text, image) {
-    let m = create_message(false)
-    m = add_text(m, text)
-    insert_message(m)
+function add_bot_message(desc, text, image) {
+    if (desc) {
+        let desc_m = create_message(false)
+        desc_m = add_text(desc_m, desc)
+        insert_message(desc_m)
+    }
+
+    let text_m = create_message(false)
+    text_m = add_text(text_m, text)
+    insert_message(text_m)
     
     if (image) {
         let m = create_message(false)
@@ -51,7 +57,7 @@ function add_bot_message(text, image) {
 
 function show_error(error) {
     console.error(error)
-    add_bot_message("Произошла ошибка", null)
+    add_bot_message(null, "Произошла ошибка", null)
 }
 
 function send_request(text) {
@@ -67,7 +73,7 @@ function send_request(text) {
                 show_error(response.text())
             } else {
                 json = response.json()
-                    .then(json => add_bot_message(json.text, json.picture))
+                    .then(json => add_bot_message(json.desc, json.text, json.picture))
                     .catch(error => show_error(error))
             }
         })

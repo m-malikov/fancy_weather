@@ -43,7 +43,12 @@ async def get_weather(message: types.Message) -> None:
     except Exception as e:
         log.exception(f"While requesting core an error occurred {str(e.args)}")
 
-    text, author, picture = json_response.get('text'), json_response.get('author'), json_response.get('picture')
+    text, author = json_response.get('text'), json_response.get('author')
+    desc, picture = json_response.get('desc'), json_response.get('picture')
+
+    if desc:
+        await message.answer(desc, parse_mode="Markdown")
+
     if text:
         await message.answer(text, parse_mode="Markdown")
 
