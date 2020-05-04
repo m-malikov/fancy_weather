@@ -1,34 +1,23 @@
-import os
 from enum import Enum
 from random import choice
-from typing import Optional
-
-from flask import current_app
+from typing import Dict, List, Optional
 
 
-class Weather(Enum):
-    RAINY = 'rainy'
-    SNOWY = 'winter'
-    COLD = 'winter'
-    WARM = 'summer'
-    SPRING = 'spring'
-    AUTUMN = 'autumn'
+class WeatherToImgurAlbum(Enum):
+    RAINY = 'hD9TtOi'
+    SNOWY = '1OYnx6T'
+    COLD = '1OYnx6T'
+    WARM = 'ZFHVUYq'
+    SPRING = 'e2NdXQn'
+    AUTUMN = 'Qp8PziJ'
 
 
-def generate_picture(weather: str) -> Optional[str]:
+def generate_picture(weather: str, images_links: Dict[str, List[str]]) \
+        -> Optional[str]:
     try:
-        dir_name = Weather[weather.upper()].value
+        imgur_album = WeatherToImgurAlbum[weather.upper()].value
     except KeyError:
         return None
 
-    path = os.path.join(os.path.dirname(os.path.realpath(__file__)),
-                        f'pic_storage/{dir_name}')
-
-    files = []
-    for root, _, filenames in os.walk(path):
-        for filename in filenames:
-            files.append(os.path.join(root, filename))
-
-    current_app.logger.debug(f'Found {len(files)} files')
-
-    return choice(files)
+    links_for_album = images_links[imgur_album]
+    return choice(links_for_album)

@@ -8,6 +8,7 @@ services:
       dockerfile: ./pictures/Dockerfile
     environment:
       - PICTURES_PORT=30600
+      - IMGUR_CLIENT=13bfb3e95351a14
     restart: on-failure
     ports:
       - 30600:30600
