@@ -39,3 +39,8 @@ dmypy.json
 
 # pytype static type analyzer
 .pytype/
+
+*.json
+
+# The name of database
+weather
