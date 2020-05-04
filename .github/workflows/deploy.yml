@@ -14,9 +14,11 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
+
         script: |
           cd fancy_weather
+          echo YANDEX_WEATHER_API_KEY=${{ secrets.YANDEX_API_SECRET_KEY }} > .env
           docker-compose down
           git pull
           docker-compose build
-          YANDEX_WEATHER_API_KEY=${{ secrets.YANDEX_API_SECRET_KEY }} docker-compose up -d
+          docker-compose up -d
