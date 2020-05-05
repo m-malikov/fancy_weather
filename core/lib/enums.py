@@ -7,84 +7,84 @@ class Condition(Enum):
     https://yandex.ru/dev/weather/doc/dg/concepts/forecast-test-docpage/
     """
     CLEAR = "clear"
-    PARTLY_CLOUDLY = "partly-cloudy"
-    CLOUDLY = "cloudly"
+    PARTLY_CLOUDY = "partly-cloudy"
+    CLOUDY = "cloudy"
     OVERCAST = "overcast"
-    PARTLY_CLOUDLY_AND_LIGHT_RAIN = "partly-cloudy-and-light-rain"
-    PARTLY_CLOUDLY_AND_RAIN = "partly-cloudy-and-rain"
+    PARTLY_CLOUDY_AND_LIGHT_RAIN = "partly-cloudy-and-light-rain"
+    PARTLY_CLOUDY_AND_RAIN = "partly-cloudy-and-rain"
     OVERCAST_AND_RAIN = "overcast-and-rain"
-    OVERCAST_THUNDERSTROMS_WITH_RAIN = "overcast-thunderstorms-with-rain"
-    CLOUDLY_AND_LIGHT_RAIN = "cloudy-and-light-rain"
+    OVERCAST_THUNDERSTORMS_WITH_RAIN = "overcast-thunderstorms-with-rain"
+    CLOUDY_AND_LIGHT_RAIN = "cloudy-and-light-rain"
     OVERCAST_AND_LIGHT_RAIN = "overcast-and-light-rain"
-    CLOUDLY_AND_RAIN = "cloudy-and-rain"
+    CLOUDY_AND_RAIN = "cloudy-and-rain"
     OVERCAST_AND_WET_SNOW = "overcast-and-wet-snow"
-    PARTLY_CLOUDLY_AND_LIGHT_SNOW = "partly-cloudy-and-light-snow"
-    PARTLY_CLOUDLY_AND_SNOW = "partly-cloudy-and-snow"
+    PARTLY_CLOUDY_AND_LIGHT_SNOW = "partly-cloudy-and-light-snow"
+    PARTLY_CLOUDY_AND_SNOW = "partly-cloudy-and-snow"
     OVERCAST_AND_SNOW = "overcast-and-snow"
-    CLOUDLY_AND_LIGHT_SNOW = "cloudy-and-light-snow"
+    CLOUDY_AND_LIGHT_SNOW = "cloudy-and-light-snow"
     OVERCAST_AND_LIGHT_SNOW = "overcast-and-light-snow"
-    CLOUDLY_AND_SNOW = "cloudy-and-snow"
+    CLOUDY_AND_SNOW = "cloudy-and-snow"
 
-    RAIN_CONDITIONS = {PARTLY_CLOUDLY_AND_LIGHT_RAIN, PARTLY_CLOUDLY_AND_RAIN, OVERCAST_AND_RAIN,
-                       OVERCAST_THUNDERSTROMS_WITH_RAIN, CLOUDLY_AND_LIGHT_RAIN, OVERCAST_AND_LIGHT_RAIN,
-                       CLOUDLY_AND_RAIN}
+    RAIN_CONDITIONS = {PARTLY_CLOUDY_AND_LIGHT_RAIN, PARTLY_CLOUDY_AND_RAIN, OVERCAST_AND_RAIN,
+                       OVERCAST_THUNDERSTORMS_WITH_RAIN, CLOUDY_AND_LIGHT_RAIN, OVERCAST_AND_LIGHT_RAIN,
+                       CLOUDY_AND_RAIN}
 
-    SNOWY_CONDITIONS = {OVERCAST_AND_WET_SNOW, PARTLY_CLOUDLY_AND_LIGHT_SNOW, PARTLY_CLOUDLY_AND_SNOW,
-                        OVERCAST_AND_SNOW, CLOUDLY_AND_LIGHT_SNOW, OVERCAST_AND_LIGHT_SNOW, CLOUDLY_AND_SNOW}
+    SNOWY_CONDITIONS = {OVERCAST_AND_WET_SNOW, PARTLY_CLOUDY_AND_LIGHT_SNOW, PARTLY_CLOUDY_AND_SNOW,
+                        OVERCAST_AND_SNOW, CLOUDY_AND_LIGHT_SNOW, OVERCAST_AND_LIGHT_SNOW, CLOUDY_AND_SNOW}
 
     def translate_to_russian(self) -> str:
         if self == Condition.CLEAR:
             return "Ясно.2"
 
-        if self == Condition.PARTLY_CLOUDLY:
+        if self == Condition.PARTLY_CLOUDY:
             return "Малооблачно."
 
-        if self == Condition.CLOUDLY:
+        if self == Condition.CLOUDY:
             return "Облачно с прояснениями."
 
         if self == Condition.OVERCAST:
             return "Пасмурно."
 
-        if self == Condition.PARTLY_CLOUDLY_AND_LIGHT_RAIN:
+        if self == Condition.PARTLY_CLOUDY_AND_LIGHT_RAIN:
             return "Небольшой дождь."
 
-        if self == Condition.PARTLY_CLOUDLY_AND_RAIN:
+        if self == Condition.PARTLY_CLOUDY_AND_RAIN:
             return "Дождь."
 
         if self == Condition.OVERCAST_AND_RAIN:
             return "Сильный дождь."
 
-        if self == Condition.OVERCAST_THUNDERSTROMS_WITH_RAIN:
+        if self == Condition.OVERCAST_THUNDERSTORMS_WITH_RAIN:
             return "Сильный дождь, гроза."
 
-        if self == Condition.CLOUDLY_AND_LIGHT_RAIN:
+        if self == Condition.CLOUDY_AND_LIGHT_RAIN:
             return "Небольшой дождь."
 
         if self == Condition.OVERCAST_AND_LIGHT_RAIN:
             return "Небольшой дождь."
 
-        if self == Condition.CLOUDLY_AND_RAIN:
+        if self == Condition.CLOUDY_AND_RAIN:
             return "Дождь."
 
         if self == Condition.OVERCAST_AND_WET_SNOW:
             return "Дождь со снегом."
 
-        if self == Condition.PARTLY_CLOUDLY_AND_LIGHT_SNOW:
+        if self == Condition.PARTLY_CLOUDY_AND_LIGHT_SNOW:
             return "Небольшой снег."
 
-        if self == Condition.PARTLY_CLOUDLY_AND_SNOW:
+        if self == Condition.PARTLY_CLOUDY_AND_SNOW:
             return "Снег."
 
         if self == Condition.OVERCAST_AND_SNOW:
             return "Снегопад."
 
-        if self == Condition.CLOUDLY_AND_LIGHT_SNOW:
+        if self == Condition.CLOUDY_AND_LIGHT_SNOW:
             return "Небольшой снег."
 
         if self == Condition.OVERCAST_AND_LIGHT_SNOW:
             return "Небольшой снег."
 
-        if self == Condition.CLOUDLY_AND_SNOW:
+        if self == Condition.CLOUDY_AND_SNOW:
             return "Снег."
 
         return ""
