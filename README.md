@@ -6,9 +6,10 @@
 
 Воспользоваться сервисом можно через
 - Сайт: http://194.67.113.84:8080  
-![site_pic](https://imgur.com/hDQKKmW)
+![site_pic](https://imgur.com/hDQKKmW.png)
+
 - Бот в телеграмме: @fancy_weather_bot  
-![bot_pic](https://imgur.com/Q7MAVOO)
+![bot_pic](https://imgur.com/LVuz1y9.png)
 
 ## Архитектура
 
