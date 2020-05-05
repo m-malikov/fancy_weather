@@ -30,11 +30,11 @@ class Forecast:
 
         message = ""
         if temp:
-            sign_temp = '+' if temp >= 0 else '-'
+            sign_temp = '+' if temp > 0 else ''
             message += f"{sign_temp}{temp} градусов Цельсия. "
 
         if feels_like:
-            sign_feels_like = '+' if feels_like >= 0 else '-'
+            sign_feels_like = '+' if feels_like > 0 else ''
             message += f"Ощущается как {sign_feels_like}{feels_like}. "
 
         desc = Condition(self.condition).translate_to_russian()
@@ -83,8 +83,7 @@ class DatabaseWrapper:
         This method quite ineffective, we update rows one by one.
         Look here why we cant implement insert on conflict: https://github.com/sqlalchemy/sqlalchemy/issues/4010
 
-        However, it's okay for us. len(forecasts) no more that 7 and we update forecasts rarely
-        :param condition:
+        However, it's okay for us. len(forecasts) no more that 7 and we update forecasts rarely1
         :param forecasts: list of forecasts to update in db
         """
         conn = await self._engine.connect()

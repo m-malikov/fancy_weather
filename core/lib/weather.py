@@ -48,17 +48,17 @@ class Weather:
         clear_text = text.lower()
         if 'сегодня' in clear_text:
             time_delta = timedelta(days=0)
-        elif 'завтра' in clear_text or "1 день" in clear_text or "один день" in clear_text:
-            time_delta = timedelta(days=1)
         elif 'послезавтра' in clear_text or "2 дня" in clear_text or "два дня" in clear_text:
             time_delta = timedelta(days=2)
+        elif 'завтра' in clear_text or "1 день" in clear_text or "один день" in clear_text:
+            time_delta = timedelta(days=1)
         elif "3 дня" in clear_text or "три дня" in clear_text:
             time_delta = timedelta(days=3)
         elif "4 дня" in clear_text or "четыре дня" in clear_text:
             time_delta = timedelta(days=4)
         elif "5 дней" in clear_text or "пять дней" in clear_text:
             time_delta = timedelta(days=5)
-        elif '6 дней' in clear_text or "6 дней" in clear_text:
+        elif '6 дней' in clear_text or "шесть дней" in clear_text:
             time_delta = timedelta(days=6)
         else:
             return None
@@ -67,7 +67,7 @@ class Weather:
 
     @staticmethod
     def _parse_forecast_to_weather_type(forecast: Forecast) -> WeatherType:
-        condition = Condition(forecast.condition)
+        condition = Condition(forecast.condition).value
         season = Season(forecast.season)
 
         if condition in Condition.RAIN_CONDITIONS.value:
@@ -76,7 +76,7 @@ class Weather:
         if condition in Condition.SNOWY_CONDITIONS.value:
             return WeatherType.SNOWY
 
-        if season == Season.spring:
+        if season == Season.SPRING:
             return WeatherType.SPRING
 
         if season == Season.AUTUMN:

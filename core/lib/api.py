@@ -14,7 +14,7 @@ class Handler:
     async def api(self, request: web.Request) -> web.Response:
         params = request.rel_url.query
         text = params.get('text')
-        if text is None:
+        if not text:
             return web.Response(text='Send user text as query param', status=422)
 
         result = await self._weather.process_message(text)

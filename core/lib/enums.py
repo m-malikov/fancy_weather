@@ -34,7 +34,7 @@ class Condition(Enum):
 
     def translate_to_russian(self) -> str:
         if self == Condition.CLEAR:
-            return "Ясно.2"
+            return "Ясно."
 
         if self == Condition.PARTLY_CLOUDY:
             return "Малооблачно."
@@ -97,8 +97,8 @@ class Season(Enum):
     """
     SUMMER = "summer"
     AUTUMN = "autumn"
-    winter = "winter"
-    spring = "spring"
+    WINTER = "winter"
+    SPRING = "spring"
 
 
 class WeatherType(Enum):
