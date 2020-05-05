@@ -6,8 +6,8 @@ from typing import Dict, Optional, Tuple
 from aiohttp import ClientSession, ClientResponseError
 from tornado.options import options
 
-from db import DatabaseWrapper, Forecast
-from enums import WeatherType, Condition, Season
+from lib.db import DatabaseWrapper, Forecast
+from lib.enums import WeatherType, Condition, Season
 
 
 log = logging.getLogger(__name__)

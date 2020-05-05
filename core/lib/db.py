@@ -8,7 +8,7 @@ from sqlalchemy.sql.ddl import CreateTable
 from sqlalchemy_aio import ASYNCIO_STRATEGY
 from sqlalchemy import create_engine, Column, Text, Table, MetaData
 
-from enums import Condition
+from lib.enums import Condition
 
 
 @dataclass

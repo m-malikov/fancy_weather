@@ -23,6 +23,8 @@ jobs:
         run: IMGUR_CLIENT=13bfb3e95351a14 pytest pictures
       - name: Tests poems
         run: pytest poems
+      - name: Tests core
+        run: PYTHONPATH=core pytest core
 
       # flake8 test
       - name: Run linter
