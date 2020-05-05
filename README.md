@@ -6,29 +6,23 @@
 
 Воспользоваться сервисом можно через
 - Сайт: http://194.67.113.84:8080  
-![site_pic](https://imgur.com/hDQKKmW.png)
+![preview](https://i.imgur.com/2sM5J4x.jpg)
 
 - Бот в телеграмме: @fancy_weather_bot  
-![bot_pic](https://imgur.com/LVuz1y9.png)
+![preview](https://i.imgur.com/hKszpWD.png)
 
 ## Архитектура
 
-![scheme](https://i.imgur.com/hGgbxqg.png)
-
-Проект разбит на 5 микросервисов. `Core` отвечает за получение погоды и распознавание сообщений пользователя. Также он получает картинки и стихи из `pictures` и `poems`.
+Проект разбит на 5 микросервисов. 
+`Core` отвечает за получение погоды и распознавание сообщений пользователя.  Он получает картинки и стихи из `pictures` и `poems`.
 Картинки - это картины известных русских художников, они разделены на 5 коллекций, отвечающих настроению каждой погоды. 
 Стихи дополняют прогноз русским колоритом. Прогноз отформатирован так, чтобы быть приятным пользователю
 
 `Web-front` и `tg_bot` получают данные из `core`
 
-Стоит упомянуть, что в каждом сервисе применялись Docker, docker-compose, pytest, mypy
+Стоит упомянуть, что в каждом сервисе применялись Docker, docker-compose, pytest, mypy, flake8.
 
-## Демонстрация
-#### Web-интерфейс
-![preview](https://i.imgur.com/2sM5J4x.jpg)
-
-#### Telegram bot
-![preview](https://i.imgur.com/hKszpWD.png)
+![scheme](https://i.imgur.com/hGgbxqg.png)
 
 ## Запуск
 Достаточно выполнить команду `docker-compose up --build`
@@ -36,4 +30,3 @@
 Тесты: `py.test -vl {название модуля}`
 
 Проверка кодстайла mypy: `mypy -p {название модуля}`
-ieNgoo4mahF3
