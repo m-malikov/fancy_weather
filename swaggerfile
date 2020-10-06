@@ -1,0 +1,46 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "fancy-weather"
+basePath: "/api/v1"
+schemes:
+- "http"
+paths:
+  /weather:
+    get:
+      summary: "Получить информацию о погоде"
+      operationId: "getWeather"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "text"
+        type: "string"
+        description: "Текст сообщения от пользователя"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          schema: 
+            $ref: "#/definitions/WeatherInfo"
+        "502":
+          description: "Server error"
+definitions:
+  WeatherInfo:
+    type: "object"
+    properties:
+      desc:
+        type: "string"
+        description: "Погода текстом"
+        example: "+18 градусов Цельсия. Ощущается как + 16. Пасмурно"
+      text:
+        type: "string"
+        description: "Стихотворение о погоде"
+        example: "Однажды, в студеную зимнюю пору..."
+      picture:
+        type: "string"
+        description: "url картинки с погодой"
+        example: "https://imgur.com/F29QWu9"
+
